@@ -4,10 +4,11 @@
  * Methods are static and recursive.
  * 
  * @author Sean Reddell
- * @version 4/3/16
+ * @version 4/4/16
  */
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class CombObject
 {
@@ -106,6 +107,118 @@ public class CombObject
 
         return set;
     }
-
+    
+    /*
+     * Obtains set of all subsets of a string.
+     * Recursive implementation.
+     * 
+     * @param str String to be broken into subsets.
+     * @return Formatted list of 2^N subsets.
+     */
+    /*
+    public static ArrayList<String> getSubsets(String str)
+    {
+        //obtain raw list of subsets
+        ArrayList<String> rawSets = getSubList(str);
+        ArrayList<String> formSets = new ArrayList<String>();
+        
+        //format subset strings
+        for (String subset : rawSets)
+        {
+            formSets.add(setFormat(subset));
+        }
+        
+        //return formatted list
+        return formSets;
+    }*/
+    
+    /**
+     * Formats string to proper subset format.
+     * 
+     * @param str The list to be formatted.
+     * @return Formatted subset string.
+     */
+    private static String setFormat(String str)
+    {
+        //begin with opening brace
+        String formSet = "{";
+        
+        //format surrounding each letter
+        char[] formChars = new char[2];
+        formChars[0] = ' ';
+        //formChars[2] = ',';
+        
+        //add each letter to setForm
+        for (int i = 0; i < str.length(); i++)
+        {
+            formChars[1] = str.charAt(i);
+            String formSeg = new String(formChars);
+            formSet = formSet.concat(formSeg);
+        }
+        
+        //append closing brace
+        char[] closeChars = new char[2];
+        closeChars[0] = ' ';
+        closeChars[1] = '}';
+        String close = new String(closeChars);
+        
+        formSet = formSet.concat(close);
+        
+        return formSet;
+    }
+    
+    /**
+     * Main driver for the CombObject class demo.
+     * 
+     * @param args N/A
+     */
+    public static void main(String[] args)
+    {
+        ArrayList<String> permutes = new ArrayList<String>();
+        ArrayList<String> subSets = new ArrayList<String>();
+        
+        //obtain input
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("Enter string:");
+        
+        if (input.hasNext())
+        {
+            Scanner combReader = new Scanner(input.nextLine());
+            String comb = combReader.next();
+            
+            permutes = getLexPerm(comb);
+            subSets = getSubsets(comb);
+        }
+        
+        /* Permutations*/
+        System.out.println("Permutations:");
+        
+        for (String perm : permutes)
+        {
+            System.out.println(perm);
+        }
+        
+        //Blank space to separate
+        System.out.println();
+        System.out.println();
+        
+        /* Subsets */
+        System.out.println("Subsets:");
+        
+        
+        //if getSubsets() returns raw
+        for (String raw : subSets)
+        {
+            System.out.println(setFormat(raw));
+        }
+        
+        /*
+        //if getSubsets() returns formatted
+        for (String formed : subSets)
+        {
+            System.out.prinln(formed);
+        }
+        */
+    }
 }
-
