@@ -208,9 +208,12 @@ public class CombObject
         
         
         //if getSubsets() returns raw
-        for (String raw : subSets)
+        for (int i = 1; i <= subSets.size(); i++)
         {
-            System.out.println(setFormat(raw));
+            String raw = subSets.get(i - 1);
+            String braced = setFormat(raw);
+            String formed = new String(i + ": " + braced);
+            System.out.println(formed);
         }
         
         /*
