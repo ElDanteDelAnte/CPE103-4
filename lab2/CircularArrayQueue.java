@@ -17,26 +17,33 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
     
     private T[] queue;
     
-    /* If EmptyCollectionException is defined here*/
     /**
-     * Exception thrown for illegal operations on empty queue.
+     * Exception thrown for illegal operations on 
+     * an empty collection.
      */
-    /*
     public static class EmptyCollectionException extends RuntimeException
     {
-        public EmptyCollectionException() { super("The queue is empty"); }
+        /* Default RuntimeException contructor */
+        public EmptyCollectionException() { super(); }
         
+        /* Construct with error message */
         public EmptyCollectionException(String message) { super(message); }
     }
-    */
+    
     
     /* Constructors */
     /**
-     * Default constructor.
      * Initializes an empty queue at default initial capacity.
+     * (Default capacity: 10)
      */
+    @SuppressWarnings("unchecked")
     public CircularArrayQueue()
     {
+        queue = (T[]) new Object[DEFAULT_CAPACITY];
+        
+        front = 0;
+        rear = -1;
+        count = 0;
     }
     
     /**
@@ -44,8 +51,14 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      * 
      * @param initialCapacity Specified initial capacity.
      */
+    @SuppressWarnings("unchecked")
     public CircularArrayQueue(int initialCapacity)
     {
+        queue = (T[]) new Object[initialCapacity];
+        
+        front = 0;
+        rear = -1;
+        count = 0;
     }
     
     /* Methods */
@@ -58,6 +71,10 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      */
     public void enqueue(T element)
     {
+        rear = (rear + 1) % queue.length;
+        queue[rear] = element;
+        count++;
+        if (count == queue.length) expandCapacity();
     }
     
     /**
@@ -68,7 +85,13 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      */
     public T dequeue() throws EmptyCollectionException
     {
-        return queue[0];
+        if (isEmpty()) throw new EmptyCollectionException(
+            "Queue empty, cannot dequeue.");
+        
+        T temp = queue[front];
+        front = (front + 1) % queue.length;
+        count--;
+        return temp;
     }
     
     /**
@@ -79,7 +102,9 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      */
     public T first() throws EmptyCollectionException
     {
-        return queue[0];
+        if (isEmpty()) throw new EmptyCollectionException(
+            "Queue empty, no first item.");
+        return queue[front];
     }
     
     /**
@@ -89,7 +114,7 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      */
     public boolean isEmpty()
     {
-        return false;
+        return count == 0;
     }
     
     /**
@@ -99,7 +124,7 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      */
     public int size()
     {
-        return -1;
+        return count;
     }
     
     /**
@@ -108,7 +133,18 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      * 
      * (Should this one really be public?)
      */
+    @SuppressWarnings("unchecked")
     public void expandCapacity()
     {
+        T[] newQ = (T[]) new Object[queue.length * 2];
+        
+        //transfer each element over to newQ
+        for (int i = 0; i < count; i++)
+        
+        //adjust front and rear
+        rear = queue.length;
+        front = 0;
+        
+        queue = newQ;
     }
 }
