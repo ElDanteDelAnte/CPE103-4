@@ -17,7 +17,7 @@ public class CombObject
      * Recursive implementation.
      * 
      * @param str String to be permuted (assumed lower case and alphabetical).
-     * @returns Lexicographic list of permutations.
+     * @return Lexicographic list of permutations.
      */
     public static ArrayList<String> getLexPerm(String str)
     {
@@ -71,7 +71,7 @@ public class CombObject
      * Recursive implementation.
      * 
      * @param str String to be broken into subsets.
-     * @returns List of 2^N subsets of a string of N characters.
+     * @return List of 2^N subsets of a string of N characters.
      */
     public static ArrayList<String> getSubsets(String str)
     {
@@ -113,7 +113,7 @@ public class CombObject
      * Recursive implementation.
      * 
      * @param str String to be broken into subsets.
-     * @returns Formatted list of 2^N subsets.
+     * @return Formatted list of 2^N subsets.
      */
     /*
     public static ArrayList<String> getSubsets(String str)
@@ -136,7 +136,7 @@ public class CombObject
      * Formats string to proper subset format.
      * 
      * @param str The list to be formatted.
-     * @returns Formatted subset string.
+     * @return Formatted subset string.
      */
     private static String setFormat(String str)
     {
