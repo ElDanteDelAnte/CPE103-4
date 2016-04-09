@@ -1,49 +1,53 @@
 /**
  * A generic Queue data structure implemented via circular array.
- * Implements QueueADT<T>, Presumably professor's interface.
  * 
  * Lab 2.
  * 
  * @author Sean Reddell
- * @version 4/7/16
+ * @version 4/9/16
  */
 
-public class CircularArrayQueue<T> //implements QueueADT<T>
+import java.lang.IllegalStateException;
+
+public class MyQueue<T> //implements QueueADT<T>
 {
     /* Fields */
     private final int DEFAULT_CAPACITY = 10;
     
-    private int front, rear, count;
+    private int front, rear, size;
     
     private T[] queue;
     
-    /**
+    /*
      * Exception thrown for illegal operations on 
      * an empty collection.
      */
+    /*
     public static class EmptyCollectionException extends RuntimeException
     {
-        /* Default RuntimeException contructor */
+        // Default RuntimeException contructor
         public EmptyCollectionException() { super(); }
         
-        /* Construct with error message */
+        // Construct with error message
         public EmptyCollectionException(String message) { super(message); }
     }
+    */
     
     
     /* Constructors */
+    
     /**
      * Initializes an empty queue at default initial capacity.
      * (Default capacity: 10)
      */
     @SuppressWarnings("unchecked")
-    public CircularArrayQueue()
+    public MyQueue()
     {
         queue = (T[]) new Object[DEFAULT_CAPACITY];
         
         front = 0;
         rear = -1;
-        count = 0;
+        size = 0;
     }
     
     /**
@@ -52,13 +56,13 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      * @param initialCapacity Specified initial capacity.
      */
     @SuppressWarnings("unchecked")
-    public CircularArrayQueue(int initialCapacity)
+    public MyQueue(int initialCapacity)
     {
         queue = (T[]) new Object[initialCapacity];
         
         front = 0;
         rear = -1;
-        count = 0;
+        size = 0;
     }
     
     /* Methods */
@@ -73,24 +77,28 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
     {
         rear = (rear + 1) % queue.length;
         queue[rear] = element;
-        count++;
-        if (count == queue.length) expandCapacity();
+        size++;
+        if (size == queue.length) 
+            expandCapacity();
     }
     
     /**
      * Removes and returns element at front of queue.
      * 
      * @return Reference to removed element.
-     * @throws EmptyCollectionException if queue is empty.
+     * @throws IllegalStateException if queue is empty.
      */
-    public T dequeue() throws EmptyCollectionException
+    public T dequeue() throws IllegalStateException
     {
-        if (isEmpty()) throw new EmptyCollectionException(
+        if (isEmpty()) 
+        {
+            throw new IllegalStateException(
             "Queue empty, cannot dequeue.");
+        }
         
         T temp = queue[front];
         front = (front + 1) % queue.length;
-        count--;
+        size--;
         return temp;
     }
     
@@ -98,12 +106,15 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      * Obtains the first element in the queue without removing it.
      * 
      * @return Reference to first element in queue.
-     * @throws EmptyCollectionException if queue is empty.
+     * @throws IllegalStateException if queue is empty.
      */
-    public T first() throws EmptyCollectionException
+    public T first() throws IllegalStateException
     {
-        if (isEmpty()) throw new EmptyCollectionException(
+        if (isEmpty()) 
+        {
+            throw new IllegalStateException(
             "Queue empty, no first item.");
+        }
         return queue[front];
     }
     
@@ -114,7 +125,7 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      */
     public boolean isEmpty()
     {
-        return count == 0;
+        return size == 0;
     }
     
     /**
@@ -122,27 +133,29 @@ public class CircularArrayQueue<T> //implements QueueADT<T>
      * 
      * @return Number of elements in queue.
      */
-    public int size()
+    public int qsize()
     {
-        return count;
+        return size;
     }
     
     /**
      * Transfers contents of queue to new array twice the size
      * of the previous.
-     * 
-     * (Should this one really be public?)
      */
     @SuppressWarnings("unchecked")
-    public void expandCapacity()
+    private void expandCapacity()
     {
         T[] newQ = (T[]) new Object[queue.length * 2];
         
         //transfer each element over to newQ
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < size; i++)
+        {
+            newQ[i] = queue[front];
+            front = (front + 1) % queue.length;
+        }
         
         //adjust front and rear
-        rear = queue.length;
+        rear = queue.length - 1;
         front = 0;
         
         queue = newQ;
