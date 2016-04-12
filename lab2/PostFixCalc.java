@@ -92,6 +92,8 @@ public class PostFixCalc
     {
         Scanner input = new Scanner(System.in);
         
+        System.out.println("Enter postfix expression:");
+        
         //obtain expression from user
         if (input.hasNextLine())
         {
