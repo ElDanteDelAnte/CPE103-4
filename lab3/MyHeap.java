@@ -49,7 +49,7 @@ public class MyHeap
         for (int i = 0; i < items.length; i++)
         {
             array[i + 1] = items[i];
-            driftUp(i + 1);
+            driftup(i + 1);
             currentSize++;
         }
         return true;
@@ -57,12 +57,20 @@ public class MyHeap
     
     /**
      * Returns contents of the heap.
+     * This is NOT the internal array.
      * 
      * @return Array representation of the heap.
      */
     public int[] heapContents()
     {
-        return array;
+        int[] heapOut = new int[currentSize];
+        
+        //transfer contents into array, sans blank at index 0
+        for (int i = 0; i < currentSize; i++)
+        {
+            heapOut[i] = array[i + 1];
+        }
+        return heapOut;
     }
     
     /**
@@ -81,7 +89,7 @@ public class MyHeap
         //put into end, then drift up
         currentSize++;
         array[currentSize] = item;
-        driftUp(currentSize);
+        driftup(currentSize);
         
         return true;
     }
@@ -191,7 +199,7 @@ public class MyHeap
      * 
      * @param firstInd Index of the item to be drifted.
      */
-    public void driftUp(int firstInd)
+    public void driftup(int firstInd)
     {
         int ind = firstInd;
         
@@ -205,25 +213,4 @@ public class MyHeap
         }
     }
     
-    /**
-     * Alias of driftUp() method, in case of naming issues.
-     * 
-     * @param firstInd Index of the item to be drifted.
-     */
-    public void driftup(int firstInd)
-    {
-        driftUp(firstInd);
-    }
-    
-    /**
-     * Test driver for MyHeap.
-     * Takes the name of the file of integers and 
-     * tests each method on them.
-     * 
-     * @param args Command-line arguments. args[1]
-     * should be the name of a file of integers.
-     */
-    public static void main(String[] args)
-    {
-    }
 }
