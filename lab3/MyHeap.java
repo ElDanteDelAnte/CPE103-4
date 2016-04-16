@@ -40,6 +40,8 @@ public class MyHeap
      */
     public boolean buildHeap(int[] items)
     {
+        currentSize = 0;
+        
         if (items.length + 1 > array.length)
         {
             return false;
@@ -169,25 +171,33 @@ public class MyHeap
     {
         int ind = firstInd;
         
-        //keep switching until heap property satisfied
-        while (array[ind] < array[2 * ind]
-               || array[ind] < array[2 * ind + 1])
+        //keep switching until no more children
+        while (ind * 2 <= currentSize)
+               //... or until heap property satisfied
+               //&& (array[ind] < array[2 * ind]
+               //|| array[ind] < array[2 * ind + 1]))
         {
-            //take larger of the two
+            //select target
+            
+            //take larger of the two (if two children)
             int tarInd;
-            if (array[2 * ind] < array[2 * ind + 1])
+            if ((ind * 2 < currentSize)
+                && (array[2 * ind] < array[2 * ind + 1]))
             {
                 tarInd = 2 * ind + 1;
             }
-            else
+            else //left if equal (or one child)
             {
                 tarInd = 2 * ind;
             }
             
-            //switch
-            int temp = array[ind];
-            array[ind] = array[tarInd];
-            array[tarInd] = temp;
+            //switch if violates heap property
+            if (array[ind] < array[tarInd])
+            {
+                int temp = array[ind];
+                array[ind] = array[tarInd];
+                array[tarInd] = temp;
+            }
             
             //increment
             ind = tarInd;
@@ -204,7 +214,7 @@ public class MyHeap
         int ind = firstInd;
         
         //drift up until heap property restored
-        while (array[ind / 2] < array[ind])
+        while (array[ind / 2] < array[ind] && ind > 0)
         {
             int temp = array[ind / 2];
             array[ind / 2] = array[ind];
