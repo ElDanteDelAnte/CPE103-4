@@ -12,7 +12,7 @@ import java.io.File;
 public class TestMyHeap
 {
     private static final int MAXSIZE = 1000;
-    private static final int MAXARRAYS = 100;
+    private static final int MAXLINES = 100;
     private static final String FILENAME = "MyHeapTest.txt";
     
     /**
@@ -115,9 +115,7 @@ public class TestMyHeap
         filename = directory + "\\" + filename;
         */
         
-        //array of int arrays made from each line of the test file
-        int[][] arrayFromLine = new int[MAXARRAYS][MAXSIZE];
-        int lineNum = 1;
+        String[] lines = new Sring[MAXLINES];
         
         //open and read from file
         try
@@ -126,9 +124,9 @@ public class TestMyHeap
             Scanner fileReader = new Scanner(numFile);
             
             //read each number and transfer to temp array
-            for (int line = 1; fileReader.hasNextLine(); line++)
+            for (int lineNum = 1; lineNum < MAXLINES && fileReader.hasNextLine(); line++)
             {
-                arrayFromLine[line] = getNums(fileReader.nextLine());
+                lines[lineNum] = fileReader.nextLine();
             }
         }
         catch (IOException ioe)
@@ -144,63 +142,112 @@ public class TestMyHeap
             passing[b] = true;
         }
         
-        /* Test default constructor */
-        //make heap
-        //test capacity
+        /* 0. Test default constructor */
+        MyHeap testDef = new MyHeap();
+	passing[0] = passing[0] && (testDef.getHeapCap() == 50);
+        //passing[0] = passing[0] && (testDef.isEmpty()); //move to test empty
+        passing[0] = passing[0] && (testDef.getHeapSize() == 0);
         
-        /* Test param constructor */
-        //make other heap
-        //test capacity
+        if ((testDef.getHeapCap() != 50)
+           || (testDef.getHeapSize() != 0))
+        {
+            passing[0] = false;
+        }
+        //empty case for insert
+        testDef.insert(5);
+
+        if ((testDef.findMax() != 5)
+           || (testDef.getHeapSize() != 1)
+           || (testDef.getHeapCapacity() != 50))
+        {
+            passing = false;
+        }
         
-        /* Test getHeapCap() */
-        //use either of the two from before?
+        //tests isFull
+        if (testDef.isFull())
+        {
+            passing = false;
+        }
         
-        /* Test build heap */
+        //tests isEmpty
+        if (testDef.isEmpty())
+        {
+            passing = false;
+        }
+
+        //tests that findMax does not remove
+        if ((testDef.findMax() != 5)
+           || (testDef.getHeapSize() != 1)
+           || (testDef.getHeapCapacity() != 50)
+        {
+            passing = false;
+        }
         
+        /* 1. Test param constructor */
+        MyHeap testSet = new MyHeap(30);
+        
+        if ((testSet.getHeapCap != 30)
+           || testSet.getHeapSize != 0))
+        {
+            passing[1] = false;
+        }
+
+        /* 2. Test getHeapCap() */
+        //check during build-over test
+        
+        /* 3. Test build heap */
+        //build heap
         int[] tarBuildArray1 = 
-            
+        //build over that heap
+        //build too big
         
-        //build with nums
-        //print contents
         
-        /* Test getHeapSize */
+        /* 4. Test getHeapSize */
+        //empty case
+        //full case
+        //make sure size != cap
+        //after insert, delete
         
-        /* Test isFull */
+        /* 5. Test isFull */
         //make heap with capacity(nums.length)
         //test full
         //remove, test full
         //add, test full
         
-        /* Test isEmpty */
+        /* 6. Test isEmpty */
         //make new, test empty
         //add, test empty
         //remove, test empty
         
-        /* Test findMax */
+        /* 7. Test findMax */
         //build heap with nums
         //give size
         //give max
         //give size again
         //give max again
         
-        /* Test deleteMax */
-        //print deleteMax from last test
-        //give new size
-        //give new max?
+        /* 8. Test deleteMax */
+        //deleteMax from last test, check size, check new max
+        //different case, check left duplicate moves up (applies to driftup)
         
-        /* Test insert */
-        //build empty array, insert new
-        //build array from new, insert middling value
-        //build full array, insert, get if false
+        /* 9. Test insert */
+        //insert to empty heap
+        //insert middling value
+        //insert when too full
+        //insert when duplicate
         
-        /* Test driftDown */
+        /* 10. Test driftDown */
         //test that Drift down does not make changes if no errors
-        int[] testDownArray = arrayFromLine[lineNum++];
-        int[] tarDownArray = arrayFromLine[lineNum++];
+        //build-over case, only sees as far as currentSize
+        int[] testDownArray = getNums(lines[lineNum++]);
+        int[] tarDownArray = getNums([lineNum++]);
         MyHeap downHeap1 = new MyHeap(31);
         //downHeap
+        //tests that driftDown takes the left duplicate
         
-        /* Test driftup */
+        /* 11. Test driftup */
+        //does not change if not needed
+        //does not see beyond currentSize (build-over case)
         
         /* Check which passed */
         checkPass();
