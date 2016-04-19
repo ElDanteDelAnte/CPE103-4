@@ -2,7 +2,7 @@
  * Test driver for the MyHeap class.
  * 
  * @author Sean Reddell
- * @version 4/14/16
+ * @version 4/17/16
  */
 
 import java.util.Scanner;
@@ -12,7 +12,7 @@ import java.io.File;
 public class TestMyHeap
 {
     private static final int MAXSIZE = 1000;
-    private static final int MAXARRAYS = 100;
+    private static final int MAXLINES = 100;
     private static final String FILENAME = "MyHeapTest.txt";
     
     /**
@@ -25,8 +25,6 @@ public class TestMyHeap
      */
     private static int[] getNums(String line)
     {
-        
-        
         int numCount = 0;
         int[] nums;
         int[] tempNums = new int[MAXSIZE];
@@ -89,7 +87,7 @@ public class TestMyHeap
                 passAll = false;
             }
         }
-        
+        System.out.println(); //single-line buffer in printout
         if (passAll)
         {
             System.out.println("All tests passed!");
@@ -115,9 +113,7 @@ public class TestMyHeap
         filename = directory + "\\" + filename;
         */
         
-        //array of int arrays made from each line of the test file
-        int[][] arrayFromLine = new int[MAXARRAYS][MAXSIZE];
-        int lineNum = 1;
+        String[] lines = new String[MAXLINES];
         
         //open and read from file
         try
@@ -126,9 +122,9 @@ public class TestMyHeap
             Scanner fileReader = new Scanner(numFile);
             
             //read each number and transfer to temp array
-            for (int line = 1; fileReader.hasNextLine(); line++)
+            for (int lineNum = 1; lineNum <= MAXLINES && fileReader.hasNextLine(); lineNum++)
             {
-                arrayFromLine[line] = getNums(fileReader.nextLine());
+                lines[lineNum] = fileReader.nextLine();
             }
         }
         catch (IOException ioe)
@@ -144,65 +140,170 @@ public class TestMyHeap
             passing[b] = true;
         }
         
-        /* Test default constructor */
-        //make heap
-        //test capacity
+        /* 0. Test default constructor */
+        MyHeap testDef = new MyHeap();
         
-        /* Test param constructor */
-        //make other heap
-        //test capacity
+        //tests construction
+        if ((testDef.getHeapCap() != 50)
+           || (testDef.getHeapSize() != 0))
+        {
+            passing[0] = false;
+        }
         
-        /* Test getHeapCap() */
-        //use either of the two from before?
+        //empty case for insert
+        testDef.insert(5);
+
+        if ((testDef.findMax() != 5)
+           || (testDef.getHeapSize() != 1)
+           || (testDef.getHeapCap() != 50))
+        {
+            passing[4] = false;
+        }
         
-        /* Test build heap */
+        //tests isFull
+        if (testDef.isFull())
+        {
+            passing[8] = false;
+        }
         
-        int[] tarBuildArray1 = 
-            
+        //tests isEmpty
+        if (testDef.isEmpty())
+        {
+            passing[7] = false;
+        }
+
+        //tests that findMax does not remove
+        if ((testDef.findMax() != 5)
+           || (testDef.getHeapSize() != 1)
+           || (testDef.getHeapCap() != 50))
+        {
+            passing[5] = false;
+        }
         
-        //build with nums
-        //print contents
+        //tests deleteMax does remove max and heap is empty again at size 0
+        int five = testDef.deleteMax();
+        if (!testDef.isEmpty() || five != 5)
+        {
+            passing[6] = false;
+        }
         
-        /* Test getHeapSize */
+        //tests that max was removed
+        if (testDef.findMax() == 5)
+        {
+            passing[5] = false;
+        }
         
-        /* Test isFull */
-        //make heap with capacity(nums.length)
-        //test full
-        //remove, test full
-        //add, test full
         
-        /* Test isEmpty */
-        //make new, test empty
-        //add, test empty
-        //remove, test empty
+        /* New Heap, cap 30 */
+        MyHeap testSet = new MyHeap(30);
         
-        /* Test findMax */
-        //build heap with nums
-        //give size
-        //give max
-        //give size again
-        //give max again
+        //tests if constructed correctly
+        if ((testSet.getHeapCap() != 30)
+           || (testSet.getHeapSize() != 0))
+        {
+            passing[1] = false;
+        }
         
-        /* Test deleteMax */
-        //print deleteMax from last test
-        //give new size
-        //give new max?
         
-        /* Test insert */
-        //build empty array, insert new
-        //build array from new, insert middling value
-        //build full array, insert, get if false
+        int[] tarArray1 = getNums(lines[1]);
+        int[] testArray1 = getNums(lines[2]);
+        passing[2] = passing[2] && testSet.buildHeap(testArray1);
+        int[] resArray1 = testSet.heapContents();
+        for (int i = 0; i < tarArray1.length; i++)
+        {
+            if (resArray1[i] != tarArray1[i])
+            {
+                passing[2] = false;
+            }
+        }
         
-        /* Test driftDown */
-        //test that Drift down does not make changes if no errors
-        int[] testDownArray = arrayFromLine[lineNum++];
-        int[] tarDownArray = arrayFromLine[lineNum++];
-        MyHeap downHeap1 = new MyHeap(31);
-        //downHeap
+        //tests if driftDown takes left when children are equal
+        //tests if driftDown only makes changes if heap property violated
+        int[] tarArray2 = getNums(lines[4]);
+        testSet.deleteMax();
+        int[] resArray2 = testSet.heapContents();
+        for (int i = 0; i < tarArray2.length; i++)
+        {
+            if (resArray2[i] != tarArray2[i])
+            {
+                passing[11] = false;
+            }
+        }
         
-        /* Test driftup */
+        int[] tarArray3 = getNums(lines[6]);
+        int[] testArray3 = getNums(lines[7]);
+        passing[2] = passing[2] && testSet.buildHeap(testArray3);
+        int[] resArray3 = testSet.heapContents();
+        //tests scope of heapContents
+        for (int i = 0; i < tarArray3.length; i++)
+        {
+            if (resArray3[i] != resArray3[i])
+            {
+                passing[3] = false;
+            }
+        }
         
-        /* Check which passed */
-        checkPass();
+        int[] tarArray4 = getNums(lines[9]);
+        testSet.deleteMax();
+        int[] resArray4 = testSet.heapContents();
+        //tests scope of driftDown
+        for (int i = 0; i < tarArray4.length; i++)
+        {
+            if (tarArray4[i] != resArray4[i])
+            {
+                passing[11] = false;
+            }
+        }
+        
+        int[] tarArray5 = tarArray4;
+        int[] testArray5 = getNums(lines[11]);
+        testSet.buildHeap(testArray5);
+        int[] resArray5 = testSet.heapContents();
+        //tests that buildHeap returns false if array too big
+        if (testSet.buildHeap(testArray5))
+        {
+            passing[2] = false;
+        }
+        
+        //tests that buildHeap makes no changes if array too big
+        for (int i = 0; i < tarArray5.length; i++)
+        {
+            if (tarArray5[i] != resArray5[i])
+            {
+                passing[2] = false;
+            }
+        }
+        
+        int[] tarArray6 = getNums(lines[13]);
+        int[] testArray6 = getNums(lines[14]);
+        passing[2] = passing[2] && testSet.buildHeap(testArray6);
+        
+        //tests that driftup only makes changes if violation of heap property
+        passing[4] = passing[4] && testSet.insert(17);
+        
+        //tests that driftup terminates at root
+        passing[4] = passing[4] && testSet.insert(35);
+        
+        
+        int[] resArray6 = testSet.heapContents();
+        
+        for (int i = 0; i < tarArray6.length; i++)
+        {
+            if (tarArray6[i] != resArray6[i])
+            {
+                System.out.print(i + " ");
+                passing[12] = false;
+            }
+        }
+        
+        //tests isFull
+        passing[8] = passing[8] && testSet.isFull();
+        
+        //getHeapSize full case
+        passing[10] = passing[10] && (testSet.getHeapSize() == 30);
+        
+        
+
+        checkPass(passing);
     }
 }

@@ -3,14 +3,13 @@
  * Implements a MaxHeap using an array.
  * 
  * @author Sean Reddell
- * @version 4/12/16
+ * @version 4/17/16
  */
 public class MyHeap
 {
     private static final int DEFAULT_CAPACITY = 50;
     private int currentSize;
     private int[] array;
-    
 
     /**
      * Constructs a MaxHeap of initial capacity 10.
@@ -20,7 +19,7 @@ public class MyHeap
         currentSize = 0;
         array = new int[DEFAULT_CAPACITY + 1];
     }
-    
+
     /**
      * Constructs MaxHeap of specified initial capacity.
      * 
@@ -40,23 +39,23 @@ public class MyHeap
      */
     public boolean buildHeap(int[] items)
     {
-        currentSize = 0;
-        
-        if (items.length + 1 > array.length)
+        if (items.length > array.length - 1)
         {
             return false;
         }
-        
+
+        currentSize = 0;
+
         //insert at bottom, then drift up
         for (int i = 0; i < items.length; i++)
         {
             array[i + 1] = items[i];
-            driftup(i + 1);
             currentSize++;
+            driftup(i + 1);
         }
         return true;
     }
-    
+
     /**
      * Returns contents of the heap.
      * This is NOT the internal array.
@@ -66,7 +65,7 @@ public class MyHeap
     public int[] heapContents()
     {
         int[] heapOut = new int[currentSize];
-        
+
         //transfer contents into array, sans blank at index 0
         for (int i = 0; i < currentSize; i++)
         {
@@ -74,7 +73,7 @@ public class MyHeap
         }
         return heapOut;
     }
-    
+
     /**
      * Inserts an item into the heap.
      * 
@@ -87,15 +86,15 @@ public class MyHeap
         {
             return false;
         }
-        
+
         //put into end, then drift up
         currentSize++;
         array[currentSize] = item;
         driftup(currentSize);
-        
+
         return true;
     }
-    
+
     /**
      * Finds the largest item in the heap without changing it.
      * 
@@ -103,9 +102,14 @@ public class MyHeap
      */
     public int findMax()
     {
+        //in case root once existed
+        if (isEmpty())
+        {
+            return array[0];
+        }
         return array[1];
     }
-    
+
     /**
      * Removes the largest item and returns it.
      * 
@@ -113,15 +117,20 @@ public class MyHeap
      */
     public int deleteMax()
     {
+        //in case root once existe
+        if (isEmpty())
+        {
+            return array[0];
+        }
         int max = array[1];
-        
+
         array[1] = array[currentSize];
         currentSize--;
         driftDown(1);
-        
+
         return max;
     }
-    
+
     /**
      * Returns whether the heap is empty.
      * 
@@ -131,7 +140,7 @@ public class MyHeap
     {
         return currentSize == 0;
     }
-    
+
     /**
      * Returns whether the heap is at maximum capacity.
      * 
@@ -141,7 +150,7 @@ public class MyHeap
     {
         return (array.length - 1) == currentSize;
     }
-    
+
     /**
      * Returns the current capacity of the heap.
      * 
@@ -151,7 +160,7 @@ public class MyHeap
     {
         return array.length - 1;
     }
-    
+
     /**
      * Returns the number of items in the heap.
      * 
@@ -161,7 +170,7 @@ public class MyHeap
     {
         return currentSize;
     }
-    
+
     /**
      * Drifts an item down until it restores the heap property.
      * 
@@ -170,19 +179,19 @@ public class MyHeap
     public void driftDown(int firstInd)
     {
         int ind = firstInd;
-        
+
         //keep switching until no more children
-        while (ind * 2 <= currentSize)
-               //... or until heap property satisfied
-               //&& (array[ind] < array[2 * ind]
-               //|| array[ind] < array[2 * ind + 1]))
+        while (ind * 2 < currentSize + 1)
+        //... or until heap property satisfied
+        //&& (array[ind] < array[2 * ind]
+        //|| array[ind] < array[2 * ind + 1]))
         {
             //select target
-            
+
             //take larger of the two (if two children)
             int tarInd;
             if ((ind * 2 < currentSize)
-                && (array[2 * ind] < array[2 * ind + 1]))
+            && (array[2 * ind] < array[2 * ind + 1]))
             {
                 tarInd = 2 * ind + 1;
             }
@@ -190,7 +199,7 @@ public class MyHeap
             {
                 tarInd = 2 * ind;
             }
-            
+
             //switch if violates heap property
             if (array[ind] < array[tarInd])
             {
@@ -198,12 +207,12 @@ public class MyHeap
                 array[ind] = array[tarInd];
                 array[tarInd] = temp;
             }
-            
+
             //increment
             ind = tarInd;
         }
     }
-    
+
     /**
      * Drifts an item up until it restores the heap property.
      * 
@@ -212,15 +221,21 @@ public class MyHeap
     public void driftup(int firstInd)
     {
         int ind = firstInd;
-        
+
         //drift up until heap property restored
-        while (array[ind / 2] < array[ind] && ind > 0)
+        while (ind / 2 > 0)
         {
-            int temp = array[ind / 2];
-            array[ind / 2] = array[ind];
-            array[ind] = temp;
+
+            //switch if violates heap property
+            if (array[ind / 2] < array[ind])
+            {
+                int temp = array[ind / 2];
+                array[ind / 2] = array[ind];
+                array[ind] = temp;
+                
+            }
             ind = ind / 2;
         }
     }
-    
+
 }
