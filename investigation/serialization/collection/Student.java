@@ -1,11 +1,11 @@
 /**
  * A Student to be written to file.
- * Students are not serializable, but Classrooms are.
+ * Students are also serializable.
  * 
  * @author Sean Reddell
  * @version 4/19/16
  */
-public class Student //implements java.io.Serializable
+public class Student implements java.io.Serializable
 {
     /** The Student's name. */
     String name;

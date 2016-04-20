@@ -1,6 +1,6 @@
 /**
  * A collection of students of a grade and their instructor.
- * Can be written to file, but Student is not serializable.
+ * Student must also be serializable.
  * 
  * @author Sean Reddell
  * @version 4/19/16
@@ -24,6 +24,9 @@ public class Classroom implements java.io.Serializable
      */
     public Classroom()
     {
+        studentList = new ArrayList<Student>();
+        grade = 0;
+        teacher = "Dalbey";
     }
     
     /**
@@ -35,6 +38,9 @@ public class Classroom implements java.io.Serializable
      */
     public Classroom(ArrayList<Student> roster, int level, String instr)
     {
+        studentList = roster;
+        grade = level;
+        teacher = instr;
     }
     
     /**
@@ -44,6 +50,7 @@ public class Classroom implements java.io.Serializable
      */
     public ArrayList<Student> getStudentList()
     {
+        return studentList;
     }
     
     /**
@@ -53,6 +60,7 @@ public class Classroom implements java.io.Serializable
      */
     public int getGrade()
     {
+        return grade;
     }
     
     /**
@@ -62,5 +70,6 @@ public class Classroom implements java.io.Serializable
      */
     public String getTeacher()
     {
+        return teacher;
     }
 }

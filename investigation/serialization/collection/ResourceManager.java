@@ -36,10 +36,10 @@ public class ResourceManager
         try
         {
             //write to disk with FileOutputStream
-            FileOutputStream f_out = new FileOutputStream(CLASSTFILENAME);
+            FileOutputStream f_out = new FileOutputStream(CLASSFILENAME);
             
             //write Student object with ObjectOutputStream
-            obj_out = new ObjectOutputStream(f_out);
+            ObjectOutputStream obj_out = new ObjectOutputStream(f_out);
             
             //write list of Students to disk, all at once
             obj_out.writeObject(school);
