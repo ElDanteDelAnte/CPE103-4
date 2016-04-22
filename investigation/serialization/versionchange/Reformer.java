@@ -3,19 +3,37 @@
  * he'll change his ways one day.
  * 
  * @author Sean Reddell
- * @version 0.3
+ * @version 0.4.1
  */
 public class Reformer implements java.io.Serializable
 {
     /** A clear sign of his hard times. */
-    private int drinksTaken = 1;
+    private int drinksTaken;
+    
+    /**
+     * Default constructor.
+     */
+    public Reformer()
+    {
+    }
+    
+    /**
+     * Parameterized constructor
+     * 
+     * @param drinks Drinks taken today.
+     */
+    public Reformer(int drinks)
+    {
+        drinksTaken = drinks;
+    }
     
     /**
      * The populace finds his new rants just as obnoxious.
      */
     public void rant()
     {
-        System.out.println("I was a hopeless fool until I found Jesus.");
+        System.out.println("Ah dun unnerstand infimity");
+        //ystem.out.println("I was a hopeless fool until I found Jesus.");
     }
     
     /**

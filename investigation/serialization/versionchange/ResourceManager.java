@@ -116,11 +116,11 @@ public class ResourceManager
      */
     public static void main(String[] args)
     {
-        Reformer drunkard = new Reformer();
+        Reformer drunkard = new Reformer(7);
         
-        //saveRef(drunkard);
+        saveRef(drunkard);
         
-        drunkard = loadRef();
+        //drunkard = loadRef();
         
         drunkard.rant();
         
