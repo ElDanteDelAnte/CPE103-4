@@ -116,16 +116,21 @@ public class ResourceManager
      */
     public static void main(String[] args)
     {
-        Reformer drunkard = new Reformer(7);
+        Reformer drunkard;
         
-        saveRef(drunkard);
+        //drunkard = new Reformer(7);
         
-        //drunkard = loadRef();
+        //saveRef(drunkard);
+        
+        drunkard = loadRef();
         
         drunkard.rant();
         
         System.out.println("Drunkard has had " + drunkard.getDrinks() + 
             " drinks today.");
+            
+        System.out.println("Drunkard has spoken " + drunkard.spoken() + 
+            " today.");
         
         
     }

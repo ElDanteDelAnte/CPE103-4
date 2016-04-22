@@ -3,12 +3,16 @@
  * he'll change his ways one day.
  * 
  * @author Sean Reddell
- * @version 0.4.1
+ * @version 0.4.3
  */
 public class Reformer implements java.io.Serializable
 {
     /** A clear sign of his hard times. */
     private int drinksTaken;
+    
+    private int psalmsSpoken = 5;
+    
+    public int spoken() { return psalmsSpoken; }
     
     /**
      * Default constructor.
@@ -32,8 +36,8 @@ public class Reformer implements java.io.Serializable
      */
     public void rant()
     {
-        System.out.println("Ah dun unnerstand infimity");
-        //ystem.out.println("I was a hopeless fool until I found Jesus.");
+        //System.out.println("Ah dun unnerstand infimity");
+        System.out.println("I was a hopeless fool until I found Jesus.");
     }
     
     /**
