@@ -3,7 +3,7 @@
  * read back in, it might not act the same.
  * 
  * @author Sean Reddell
- * @version 4/19/16
+ * @version 0.2
  */
 
 import java.io.FileOutputStream;
@@ -118,9 +118,9 @@ public class ResourceManager
     {
         Reformer drunkard = new Reformer();
         
-        saveRef(drunkard);
+        //saveRef(drunkard);
         
-        //drunkard = loadRef();
+        drunkard = loadRef();
         
         drunkard.rant();
         
