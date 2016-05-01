@@ -113,8 +113,15 @@ public class ExpressionTree
                 stack.push(new Node(symbol, null, null));
             }
         }
-
-        root = stack.pop();
+        
+        if (postExpr.length() == 0)
+        {
+            root = null;
+        }
+        else
+        {
+            root = stack.pop();
+        }
     }
 
     /**
@@ -198,6 +205,8 @@ public class ExpressionTree
      */
     public String postFixExp()
     {
+        if (root == null) return "";
+        
         String postFix = postFixExp(root);
 
         return postFix.trim();  //remove leading/trailing spaces
@@ -235,6 +244,8 @@ public class ExpressionTree
      */
     public String preFixExp()
     {
+        if (root == null) return "";
+        
         String preFix = preFixExp(root);
 
         return preFix.trim();   //remove leading/trailing spaces
@@ -272,6 +283,8 @@ public class ExpressionTree
      */
     public Float expressionVal()
     {
+        if (root == null) return new Float(-1.0f);
+        
         return expressionVal(root);
     }
     
@@ -314,6 +327,8 @@ public class ExpressionTree
      */
     public String inFixExp1()
     {
+        if (root == null) return "";
+        
         //single-operand expression
         if (isOperand(root.element))
         {
@@ -358,6 +373,8 @@ public class ExpressionTree
      */
     public String inFixExp2()
     {
+        if (root == null) return "";
+        
         String inFix = inFixCons(root);
         
         return inFix.trim(); //should have no leading/trailing spaces, but just in case
