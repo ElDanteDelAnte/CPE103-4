@@ -81,29 +81,6 @@ public class TestExpressionTree
         
         assertEquals("Error in inFix1", target1, inFix1.inFixExp1());
         assertEquals("Error in inFix2", target2, inFix1.inFixExp2());
-    }
-    
-    /**
-     * Main test driver for the TestExpressionTree test class.
-     * 
-     * @param args N/A.
-     */
-    public static void main(String[] args)
-    {
-        TestExpressionTree test = new TestExpressionTree();
-        
-        test.testPostCheck();
-        System.out.println("postFixCheck() and postFixHasVal() passed.");
-        
-        test.testNotation();
-        System.out.println("preFixExp() and postFixExp() passed.");
-        
-        test.testVal();
-        System.out.println("expressionVal() passed.");
-        
-        test.testInFix();
-        System.out.println("inFixExp1() and inFixExp2() passed.");
-        
-        System.out.println("All tests passed.");
+        assertEquals("Error in inFix2", target3, inFix2.inFixExp2());
     }
 }
