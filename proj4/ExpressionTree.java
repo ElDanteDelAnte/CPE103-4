@@ -269,8 +269,8 @@ public class ExpressionTree
         }
 
         //recurr: subroot, then left subtree, then right subtree
-        subExp = subExp.concat(postFixExp(curr.left));
-        subExp = subExp.concat(postFixExp(curr.right));
+        subExp = subExp.concat(preFixExp(curr.left));
+        subExp = subExp.concat(preFixExp(curr.right));
 
         return subExp;
     }
@@ -338,7 +338,7 @@ public class ExpressionTree
         //no parens around whole expression:
         String inFix = inFixVerb(root.left) + " ";    //left subexpression
         inFix = inFix + root.element;                 //root operator
-        inFix = " " + inFix + inFixVerb(root.right);  //right subexpression
+        inFix = inFix + " " + inFixVerb(root.right);  //right subexpression
 
         return inFix.trim(); //should have no leading/trailing spaces, but just in case
     }
@@ -399,8 +399,7 @@ public class ExpressionTree
         String rightSub = inFixCons(curr.right);
 
         //maintain order of operations
-        if (curr.element.equals("*")
-        || curr.element.equals("/"))
+        if (curr.element.equals("*"))
         {
             //left operator is of lower precidence than current
             if (curr.left.element.equals("+")
@@ -414,6 +413,28 @@ public class ExpressionTree
             || curr.right.element.equals("-"))
             {
                 //append parens to right subexpression
+                rightSub = "( " + rightSub + " )";
+            }
+        }
+        else if (curr.element.equals("/"))
+        {
+            //if left term is longer than one operand
+            if (isOperator(curr.left.element))
+            {
+                //append parens to left subexpression
+                leftSub = "( " + leftSub + " )";
+            }
+            //if right term is longer than one operand
+            if (isOperator(curr.right.element))
+            {
+                rightSub = "( " + rightSub + " )";
+            }
+        }
+        else if (curr.element.equals("-"))
+        {
+            //if right term is longer than one operand
+            if (isOperator(curr.right.element))
+            {
                 rightSub = "( " + rightSub + " )";
             }
         }
