@@ -20,7 +20,7 @@ public class CharListTester {
             else System.out.println("false");
         }
         catch (IllegalArgumentException e) {
-            System.out.print    ln("An illegal argument was passed in.");           
+            System.out.println("An illegal argument was passed in.");           
         }
         catch (IOException e) {
             System.out.println("An IOException occurred.");
