@@ -63,8 +63,12 @@ public class CharacterList {
 
     @Override
     public int hashCode() {
-        //TODO: You must override this function and return the hash.
-        return 0;
+        int h = 0;
+        for (int i = 0; i < size(); i++)
+        {
+            h = h * R + toInt(getChar(i));
+        }
+        return h;
     }
 
     public boolean checkIfSubstring(CharacterList searchstr, int method) throws IllegalArgumentException {
@@ -124,8 +128,9 @@ public class CharacterList {
                 // Then compare the hashes. 
                 if (rollHash == targHash)
                 {
-                    // If they match char by char, return true otherwise continue further.
+                    //If they match, compare the strings character by character.
                     if (compSub(start, searchstr))
+                        // If they match char by char, return true otherwise continue further.
                         return true;
                 }
                 //otherwise, keep going.
