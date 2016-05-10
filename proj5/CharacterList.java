@@ -63,7 +63,13 @@ public class CharacterList {
 
     @Override
     public int hashCode() {
-        int h = 0;
+        return (int) hashCodeLong();
+    }
+    
+    /* Full size hash code */
+    private long hashCodeLong()
+    {
+        long h = 0;
         for (int i = 0; i < size(); i++)
         {
             h = h * R + toInt(getChar(i));
@@ -93,18 +99,19 @@ public class CharacterList {
         //hashing
         else {
 
-            //TODO: Fill in code for the hashing method in this branch.
-
             // Compute the hash of the search string once.
-            int targHash = searchstr.hashCode();
+            long targHash = searchstr.hashCode();
+            
+            //targHash = (targHash < 0) ? (-targHash) : targHash;
 
             // Compute the starting hash of the haystack (i.e. of its first m characters)
-            int firstHash = 0;
+            long firstHash = 0;
 
             for (int j = 0; j < m; j++)
             {
                 firstHash = firstHash * R + toInt(getChar(j));
             }
+            
             // If the hashes match, compare the two strings character by character.
 
             if (firstHash == targHash)
@@ -113,27 +120,45 @@ public class CharacterList {
                 if (compSub(0, searchstr))
                     return true;
             }
-
+            
+            //System.out.println("Target: " + targHash);
+            //System.out.println("First: " + firstHash);
+            
             // Using a loop similar to the first branch of the if statement...
-            int rToPow = (int) Math.pow(R, m - 1);  //R^(m-1)
-            int prevHash = firstHash;
+            long rToPow = (long) Math.pow(R, m - 1);  //R^(m-1)
+            long prevHash = firstHash;
+            long mod = nextPrime((long) (2 * n + 1));
+            long targMod = modulo(targHash, mod);
+            
+            //System.out.println("TargMod: " + targMod);
+            //long mod = (long) Math.pow(R, n);
+            
             //rolling hash
             for (int start = 1; start < n - m + 1; start++)
             {
+                //System.out.print("Rolling");
                 // ... advance the portion of the haystack currently being examined
                 // by one character and recompute/update its hash.
-                int rollHash = R * (prevHash - toInt(getChar(start - 1)) * rToPow) 
-                    + toInt(getChar(start + m - 1));
-
+                long rollHash = R * (prevHash - toInt(getChar(start - 1))
+                * rToPow) + toInt(getChar(start + m - 1));
+                
+                //rollHash = (rollHash < 0) ? (-rollHash) : rollHash;
+                
+                //System.out.println(rollHash);
+                
+                //System.out.println(mod);
                 // Then compare the hashes. 
+                //if (modulo(rollHash, mod) == targMod)
                 if (rollHash == targHash)
                 {
+                    System.out.println("Collision");
                     //If they match, compare the strings character by character.
                     if (compSub(start, searchstr))
                         // If they match char by char, return true otherwise continue further.
                         return true;
                 }
                 //otherwise, keep going.
+                prevHash = rollHash;
             }
 
             // If after the loop finishes and no match has been found
@@ -151,9 +176,9 @@ public class CharacterList {
     }
 
     /** Obtains the ASCII literal value of a Character */
-    private static int toInt(Character c)
+    private static long toInt(Character c)
     {
-        return (int) c.charValue();
+        return (long) c.charValue();
     }
 
     /** Compares a substring to the searchstring */
@@ -169,6 +194,48 @@ public class CharacterList {
         }
         //if passed through entire segment without a mismatch,
         //then the substring matches
+        return true;
+    }
+    
+    /** Mod function */
+    private static long modulo(long val, long n)
+    {
+        long mod = val;
+        
+        //convert to positive
+        while (mod < 0)
+        {
+            mod += n;
+            //System.out.print("addlag ");
+        }
+        
+        //remainder
+        while (mod >= n)
+        {
+            mod -= n ;
+            //System.out.print("sublag ");
+        }        
+        return mod;
+    }
+    
+    /** Finds the next pime number */
+    private static long nextPrime(long n)
+    {
+        if (n % 2 == 0) n++;
+        while (isPrime(n)) n += 2;
+        
+        return n;
+    }
+    
+    /** Determines if a number is prime */
+    private static boolean isPrime(long n)
+    {
+        if (n % 2 == 0)
+            return false;
+        for (int i = 3; i * i < n; i += 2)
+            {
+                if (n % i == 0) return false;
+            }
         return true;
     }
 }

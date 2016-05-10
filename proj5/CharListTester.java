@@ -14,8 +14,16 @@ public class CharListTester {
             haystack = new CharacterList(new File(args[0]));
             searchstr = new CharacterList(new File(args[1]));
             method = Integer.parseInt(args[2]);
-
-            if (haystack.checkIfSubstring(searchstr, method))
+            
+            long startTime = System.currentTimeMillis();
+            boolean found = haystack.checkIfSubstring(searchstr, method);
+            long stopTime = System.currentTimeMillis();
+            
+            System.out.println("N: " + haystack.size() 
+                + " M: " + searchstr.size());
+            System.out.println("Duration: " + (stopTime - startTime));
+            
+            if (found)
                 System.out.println("true");
             else System.out.println("false");
         }
