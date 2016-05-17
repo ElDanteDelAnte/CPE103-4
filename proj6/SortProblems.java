@@ -82,8 +82,46 @@ public class SortProblems {
    
    // Finds the number of inversions in 
    public static int invCounter  (int [] arr ) {  
-      int answer = 1;
-      return answer;      
+        //base case
+        if (arr.length > 2) return 0;
+        
+        int answer = 0;
+        
+        /* Divide */
+        //get sizes for left and right halves
+        int rLength = arr.length / 2;
+        int lLength = arr.length - rLength; //left is longer if odd-numbered
+        
+        int[] lHalf = new int[lLength];
+        int[] rHalf = new int[rLength];
+        
+        /* Combine */
+        answer = invCounter(lHalf) + invCounter(rHalf);
+        
+        int i = 0;
+        int l = 0;
+        int r = 0;
+        
+        /* Conquer */
+        //run until one runs out
+        while ((l < lLength) && (r < rLength))
+        {
+            
+        }
+        
+        //add rest of left
+        while (l < lLength)
+        {
+            arr[i++] = lHalf[l++];
+        }
+        
+        //add rest of right
+        while (r < rLength)
+        {
+            arr[i++] = rHalf[r++];
+        }
+        
+        return answer;      
    }  //end invCounter
    
 }  // end class
