@@ -23,7 +23,9 @@ public class SortProblems {
       {
         //search each "collumn"
         //linear version
-        for (int j = 0; (j < n - 1) && (arr[i][j]) < target; j++);
+        int j = 0;
+        while ((j < n - 1) && (arr[i][j]) < target)
+            j++;
         
         //stop at >= target or last element
         
