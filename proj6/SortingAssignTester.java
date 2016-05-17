@@ -23,6 +23,10 @@ public class SortingAssignTester {
       int target = 25;
       answer2 = SortProblems.locator(target,haystack);
       
+      System.out.println("Locator test: (" 
+        + answer2[0] + ", " + answer2[1] + ")");
+      //should be (3, 18)
+      
       // Test invCounter  Test3 
       
       int answer3 = SortProblems.invCounter( test1   );

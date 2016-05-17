@@ -10,10 +10,69 @@ public class SortProblems {
    // return {-1,-1} if not found
    public static int[]  locator  ( int target, int [][] arr) {  
       int[] answer = new int[2];
+      int n = arr.length;  //length of each array
       
       //default case
       answer[0] = -1;
       answer[1] = -1;
+      
+      //[i][j]
+      
+      //search each "row"
+      for (int i = 0; (i < n) && (arr[i][0] < target); i++)
+      {
+        //search each "collumn"
+        //linear version
+        for (int j = 0; (j < n - 1) && (arr[i][j]) < target; j++);
+        
+        //stop at >= target or last element
+        
+        //if found (i.e. stopped at == target)
+        if (arr[i][j] == target)
+        {
+            answer[0] = i;
+            answer[1] = j;
+            
+            //terminate outer loop? or bad form?
+            break; 
+        }
+        
+        /*
+        //binary version
+        int lo = 0;
+        int hi = n - 1;
+        
+        do
+        {
+            //average
+            int j = (lo + hi) / 2;
+            
+            //go left
+            if (arr[i][j] > target)
+                hi = j - 1;
+            //go right
+            else if (arr[i][j] < target)
+                lo = j + 1;
+            //found
+            else
+            {
+                lo = j;
+                hi = j;
+            }
+            
+        } while (lo < hi) 
+        
+        
+        if (arr[i][j] == target)
+            {
+                answer[0] = i;
+                answer[1] = j;
+                
+                //terminate here? or bad form?
+                return answer;
+            }
+        */
+      }
       
       return answer;
    }  //end locator
