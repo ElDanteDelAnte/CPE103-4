@@ -21,6 +21,7 @@ public class SortProblems {
       //search each "row"
       for (int i = 0; (i < n) && (arr[i][0] < target); i++)
       {
+        /*
         //search each "collumn"
         //linear version
         System.out.print(i + ": ");
@@ -43,8 +44,8 @@ public class SortProblems {
             //terminate outer loop? or bad form?
             break; 
         }
+        */
         
-        /*
         //binary version
         int lo = 0;
         int hi = n - 1;
@@ -63,22 +64,16 @@ public class SortProblems {
             //found
             else
             {
-                lo = j;
-                hi = j;
-            }
-            
-        } while (lo < hi) 
-        
-        
-        if (arr[i][j] == target)
-            {
                 answer[0] = i;
                 answer[1] = j;
                 
                 //terminate here? or bad form?
                 return answer;
             }
-        */
+            
+        } while (lo < hi);
+        
+        
       }
       
       return answer;
