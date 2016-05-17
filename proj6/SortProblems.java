@@ -83,7 +83,7 @@ public class SortProblems {
    // Finds the number of inversions in 
    public static int invCounter  (int [] arr ) {  
         //base case
-        if (arr.length > 2) return 0;
+        if (arr.length < 2) return 0;
         
         int answer = 0;
         
@@ -92,13 +92,22 @@ public class SortProblems {
         int rLength = arr.length / 2;
         int lLength = arr.length - rLength; //left is longer if odd-numbered
         
+        //build arrays
         int[] lHalf = new int[lLength];
         int[] rHalf = new int[rLength];
+        
+        int i = 0;
+        
+        for (int il = 0; il < lLength; il++)
+            lHalf[il] = arr[i++];
+        
+        for (int ir = 0; ir < rLength; ir++)
+            rHalf[ir] = arr[i++];
         
         /* Combine */
         answer = invCounter(lHalf) + invCounter(rHalf);
         
-        int i = 0;
+        i = 0;
         int l = 0;
         int r = 0;
         
@@ -106,7 +115,27 @@ public class SortProblems {
         //run until one runs out
         while ((l < lLength) && (r < rLength))
         {
-            
+            //inversion
+            if (lHalf[l] > rHalf[r])
+            {
+                //merge
+                arr[i++] = rHalf[r++];
+                //count invert
+                answer += lLength - l;
+            }
+            //non-inversion
+            else //(lHalf[l] < rHalf[r])
+            {
+                //merge
+                arr[i++] = lHalf[l++];
+            }
+            /*
+            //what to do when equal?
+            else
+            {
+                System.out.println("Equal, what do?");
+                break;
+            }*/
         }
         
         //add rest of left
@@ -123,5 +152,21 @@ public class SortProblems {
         
         return answer;      
    }  //end invCounter
+   
+   public static int invCountLinear(int[] arr)
+   {
+    int count = 0;
+    
+    for (int i = 0; i < arr.length; i++)
+    {
+        for (int j = i + 1; j < arr.length; j++)
+        {
+            if (arr[i] > arr[j])
+                count++;
+        }
+    }
+    
+    return count;
+   }
    
 }  // end class
