@@ -23,9 +23,14 @@ public class SortProblems {
       {
         //search each "collumn"
         //linear version
+        System.out.print(i + ": ");
         int j = 0;
         while ((j < n - 1) && (arr[i][j]) < target)
-            j++;
+            {
+                System.out.print(j + ", ");
+                j++;
+            }
+        System.out.println();
         
         //stop at >= target or last element
         

@@ -27,6 +27,18 @@ public class SortingAssignTester {
         + answer2[0] + ", " + answer2[1] + ")");
       //should be (3, 18)
       
+      int[] answer22 = new int[2];
+      answer22 = SortProblems.locator(0, haystack);
+      System.out.println("Locator test 2: ("
+        + answer22[0] + ", " + answer22[1] + ")");
+      //should be (-1, -1) without probes
+      
+      int[] answer23 = new int[2];
+      answer23 = SortProblems.locator(59, haystack);
+      System.out.println("Locator test 3: ("
+        + answer23[0] + ", " + answer23[1] + ")");
+      //should be (-1, -1) with many probes
+      
       // Test invCounter  Test3 
       
       int answer3 = SortProblems.invCounter( test1   );
