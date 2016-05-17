@@ -153,6 +153,7 @@ public class SortProblems {
         return answer;      
    }  //end invCounter
    
+   /*
    public static int invCountLinear(int[] arr)
    {
     int count = 0;
@@ -167,6 +168,6 @@ public class SortProblems {
     }
     
     return count;
-   }
+   }*/
    
 }  // end class

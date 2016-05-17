@@ -40,22 +40,22 @@ public class SortingAssignTester {
       //should be (-1, -1) with many probes
       
       // Test invCounter  Test3 
-      int target3 = SortProblems.invCountLinear(test1);
-      System.out.println("Target: " + target3);
+      //int target3 = SortProblems.invCountLinear(test1);
+      //System.out.println("Target: " + target3);
       
       int answer3 = SortProblems.invCounter( test1   );
       System.out.println("Result: " + answer3);
       
       int[] test32 = {20, 17, 8, 9, 10, 11, 15, 14, 13, 23, 25, 27, 21, 5, 3, 1, 7, 2};
-      int target32 = SortProblems.invCountLinear(test32);
+      //int target32 = SortProblems.invCountLinear(test32);
       int answer32 = SortProblems.invCounter(test32);
-      System.out.println("Target: " + target32);
+      //System.out.println("Target: " + target32);
       System.out.println("Result: " + answer32);
       
       int[] test33 = {3, 4, 3, 5};
-      int target33 = SortProblems.invCountLinear(test33);
+      //int target33 = SortProblems.invCountLinear(test33);
       int answer33 = SortProblems.invCounter(test33);
-      System.out.println("Target: " + target33);
+      //System.out.println("Target: " + target33);
       System.out.println("Result: " + answer33);
 
 
