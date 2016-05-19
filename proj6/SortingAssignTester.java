@@ -57,6 +57,19 @@ public class SortingAssignTester {
       int answer33 = SortProblems.invCounter(test33);
       //System.out.println("Target: " + target33);
       System.out.println("Result: " + answer33);
+      
+      int[] answer12 = new int[18];
+      answer12 = SortProblems.IterMergeSort(test32);
+      
+      for (int i = 0; i < answer.length; i++)
+        System.out.print(answer[i] + " ");
+      
+      System.out.println();
+      
+      for (int i = 0; i < answer12.length; i++)
+        System.out.print(answer12[i] + " ");
+      
+      System.out.println();
 
 
    }

@@ -1,7 +1,65 @@
 public class SortProblems {
 
    public static int[] IterMergeSort (int []  arr) {
+      
+      //total runtime: N*log(N)?
+      
+      //clone original
       int[] answer = new int[arr.length];
+      for (int k = 0; k < arr.length; k++)
+        answer[k] = arr[k];
+      
+      //runtime: log(N)
+      for (int groupSize = 1; groupSize < answer.length; groupSize *= 2)
+      {
+        //System.out.println("New group size.");
+        
+        //runtime: N
+        //find pairs of groups
+        for (int pair = 0; pair + groupSize < answer.length; pair += 2 * groupSize)
+        {
+            //System.out.println("Next group.");
+            
+            //determine group boundaries
+            int i = pair;               //index of the "left" group
+            int j = i + groupSize;      //index of the "right" group
+            int jMax = j + groupSize;
+            
+            //"right" group may be smaller than "left"
+            if (jMax > answer.length)
+                jMax = answer.length;
+            
+            //holds the merged order
+            int[] temp = new int[2 * groupSize];
+            int tempInd = 0;   //doubles as a count of elements taken
+            
+            /* Merge groups. */
+            //take smaller
+            while ((i < (pair + groupSize)) && (j < jMax))
+            {
+                //take smaller of the two
+                if (answer[i] < answer[j])
+                    temp[tempInd++] = answer[i++];
+                else
+                    temp[tempInd++] = answer[j++];
+            }
+            
+            //add remaining left
+            while (i < (pair + groupSize))
+                temp[tempInd++] = answer[i++];
+            
+            //add remaining right
+            while (j < jMax)
+                temp[tempInd++] = answer[j++];
+            
+            
+            //return to answer array
+            for (int k = 0; k < tempInd; k++)
+                answer[pair + k] = temp[k];
+            
+        }
+      }
+      
       return answer;
    }   //end IterMergeSort
    
