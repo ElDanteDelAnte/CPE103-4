@@ -2,7 +2,7 @@ public class SortProblems {
 
    public static int[] IterMergeSort (int []  arr) {
       
-      //total runtime: N*log(N)?
+      /* total runtime: N*log(N) */
       
       //clone original
       int[] answer = new int[arr.length];
@@ -10,6 +10,7 @@ public class SortProblems {
         answer[k] = arr[k];
       
       //runtime: log(N)
+      //form groups from the bottom up until sorted
       for (int groupSize = 1; groupSize < answer.length; groupSize *= 2)
       {
         //System.out.println("New group size.");
