@@ -71,4 +71,65 @@ public class TopSorter
         
         //if remaining unsorted vertices, fill with -1
     }
+    
+    /**
+     * Compares the result of topSortGenerator against a crontrol.
+     * 
+     * @param target The known control list.
+     * @param test The test list.
+     * @param testNum The number of the test.
+     */
+    private void testResults(ArrayList<Integer> target, ArrayList<Integer> test, int testNum)
+    {
+        boolean matching = (target.size() == 5);
+        
+        //wrong size error
+        if (!matching) System.out.println("Test " + testNum + " Error: array is size " 
+            + test.size() + ", should be " + target.size);
+        
+        //mismatch error
+        for (int j = 0; j < test.size(); j++)
+        {
+            Integer t = test.get(j);
+            Integer targ = target.get(j);
+            
+            if (!targ.equals(t))
+                matching = false;
+        }
+        
+        if (matching)
+            System.out.println("Test " + testNum + " Passes.");
+        else
+        {
+            System.out.println("Test " + testNum + " ERROR!");
+            
+            System.out.print("Targ: ");
+            for (Integer vTarg : target)
+                System.out.print(vTarg + " ");
+            System.out.println();
+            
+            System.out.print("Test: ");
+            for (Integer vTest : test)
+                System.out.print(vTest + " ");
+            System.out.println();
+        }
+        
+    }
+    
+    /**
+     * Test driver for the TopSorter class.
+     * 
+     * @param args N/A.
+     */
+    pub
+    {
+        /* Test 1 */
+        ArrayList<Integer> targ1 = new ArrayList<Integer>(5);
+        for (int i = 1; i < 6; i++)
+            targ1.add(new Integer(i));
+        
+        ArrayList<Integer> test1 = topSortGenerator("topsorttest1.txt");
+        
+        testResults(targ1, test1, 1);
+    }
 }
