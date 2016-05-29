@@ -1,0 +1,1 @@
+This is the connected graph and bicoloring assignment.
