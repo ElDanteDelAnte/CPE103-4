@@ -21,9 +21,9 @@ public class TopSorter
 {
     private class GraphStart
     {
-        private int nverticies;
-        private boolean directed;
-        private LinkedList<Integer>[] edges;
+        public int nverticies;
+        //private boolean directed;
+        public LinkedList<Integer>[] edges;
 
         /**
         * Reads a graph file and constructs adjacency list.
@@ -34,24 +34,28 @@ public class TopSorter
         @SuppressWarnings("unchecked")
         private void readfile_graph(String filename) throws FileNotFoundException
         {
+            System.out.println("Started reading file.");
             FileInputStream in = new FileInputStream(new File(filename));
+            System.out.println("Read File");
             int x, y;
             Scanner sc = new Scanner(in);
-            directed = (sc.nextInt() == 1); //1 directed, else undirected
-            nverticies = sc.nextInt();
+            boolean directed = (sc.nextInt() == 1); //1 directed, else undirected
+            this.nverticies = sc.nextInt();
 
             //init adj lists
-            edges = new LinkedList[nverticies + 1];
+            this.edges = new LinkedList[nverticies + 1];
 
             for (int i = 1; i <= nverticies; i++)
                 edges[i] = new LinkedList<Integer>();
-
+                
+            System.out.println("Post-list init");
+            
             int m = sc.nextInt();
-            for (int i = 1; i <=m; i++)
+            for (int i = 1; i <= m; i++)
             {
                 x = sc.nextInt();
                 y = sc.nextInt();
-                insert_edge(x, y);
+                insert_edge(x, y, directed);
             }
         }
 
@@ -62,7 +66,7 @@ public class TopSorter
          * @param x Initial vertex (if directed).
          * @param y Terminal vertex (if directed).
          */
-        public void insert_edge(int x, int y)
+        public void insert_edge(int x, int y, boolean directed)
         {
             edges[x].add(new Integer(y));
 
@@ -77,7 +81,7 @@ public class TopSorter
          * @param x Initial vertex (if directed).
          * @param y Terminal vertex (if directed).
          */
-        public void remove_edge(int x, int y)
+        public void remove_edge(int x, int y, boolean directed)
         {
             edges[x].remove(new Integer(y));
 
@@ -102,28 +106,6 @@ public class TopSorter
                 System.out.println();
             }
         }
-
-        /**
-         * Obtains the number of verticies in the graph.
-         * 
-         * @return Number of verticies.
-         */
-        public int getNVerts()
-        {
-            return nverticies;
-        }
-
-        /**
-         * Obtains the adjacency list of a vertex on the graph.
-         * 
-         * @param vertex The specified vertex.
-         * @return List of verticies adjacent to specified.
-         */
-        public LinkedList<Integer> getAdjList(int vertex)
-        {
-            return edges[vertex];
-        }
-
     }
     
     /**
@@ -136,14 +118,14 @@ public class TopSorter
      */
     public static ArrayList<Integer> topSortGenerator(String filename)
     {
-        GraphStart graph = null;
+        GraphStart graph = new GraphStart();
         int gSize = 0;
 
         //build graph from file
         try
         {
             graph.readfile_graph(filename);
-            gSize = graph.getNVerts();
+            gSize = graph.nverticies;
         }
         catch (FileNotFoundException fnfe)
         {
@@ -151,7 +133,7 @@ public class TopSorter
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println("Some other problem " + e);
         }
 
         //init deliverable ArrayList
@@ -165,7 +147,7 @@ public class TopSorter
         //count in-degrees
         for (int i = 1; i <= gSize; i++)
         {
-            LinkedList<Integer> adjList = graph.getAdjList(i);
+            LinkedList<Integer> adjList = graph.edges[i];
 
             for (Integer terminal : adjList)
             {
@@ -193,7 +175,7 @@ public class TopSorter
             order.add(vert);
 
             //dec each adjacent vert in-degree
-            LinkedList<Integer> vertAdj = graph.getAdjList(vert);
+            LinkedList<Integer> vertAdj = graph.edges[vert];
 
             for (Integer terminal : vertAdj)
             {
