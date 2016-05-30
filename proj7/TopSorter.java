@@ -22,7 +22,7 @@ public class TopSorter
     private class GraphStart
     {
         public int nverticies;
-        //private boolean directed;
+        private boolean directed;
         public LinkedList<Integer>[] edges;
 
         /**
@@ -34,12 +34,12 @@ public class TopSorter
         @SuppressWarnings("unchecked")
         private void readfile_graph(String filename) throws FileNotFoundException
         {
-            System.out.println("Started reading file.");
+            //System.out.println("Started reading file.");
             FileInputStream in = new FileInputStream(new File(filename));
-            System.out.println("Read File");
+            //System.out.println("Read File");
             int x, y;
             Scanner sc = new Scanner(in);
-            boolean directed = (sc.nextInt() == 1); //1 directed, else undirected
+            directed = (sc.nextInt() == 1); //1 directed, else undirected
             this.nverticies = sc.nextInt();
 
             //init adj lists
@@ -48,14 +48,14 @@ public class TopSorter
             for (int i = 1; i <= nverticies; i++)
                 edges[i] = new LinkedList<Integer>();
                 
-            System.out.println("Post-list init");
+            //System.out.println("Post-list init");
             
             int m = sc.nextInt();
             for (int i = 1; i <= m; i++)
             {
                 x = sc.nextInt();
                 y = sc.nextInt();
-                insert_edge(x, y, directed);
+                insert_edge(x, y);
             }
         }
 
@@ -66,7 +66,7 @@ public class TopSorter
          * @param x Initial vertex (if directed).
          * @param y Terminal vertex (if directed).
          */
-        public void insert_edge(int x, int y, boolean directed)
+        public void insert_edge(int x, int y)
         {
             edges[x].add(new Integer(y));
 
@@ -81,7 +81,7 @@ public class TopSorter
          * @param x Initial vertex (if directed).
          * @param y Terminal vertex (if directed).
          */
-        public void remove_edge(int x, int y, boolean directed)
+        public void remove_edge(int x, int y)
         {
             edges[x].remove(new Integer(y));
 
@@ -118,7 +118,7 @@ public class TopSorter
      */
     public static ArrayList<Integer> topSortGenerator(String filename)
     {
-        GraphStart graph = new GraphStart();
+        GraphStart graph = new TopSorter().new GraphStart();
         int gSize = 0;
 
         //build graph from file
