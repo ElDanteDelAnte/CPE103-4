@@ -163,6 +163,10 @@ public class TopSorter
             if (indegs[i] == 0)
                 starters.add(new Integer(i));
         }
+        
+        //if not even partially sortable, return empty
+        if (starters.isEmpty())
+            return order;
 
         /* Loop until no in-degree 0: */
         while (!starters.isEmpty())
