@@ -1,33 +1,45 @@
 
 /**
- * Write a description of class ConnectCheck here.
+ * Segregates the connected components of a graph.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Project 7.
+ * 
+ * @author Sean Reddell
+ * @version 5/31/16
  */
 public class ConnectCheck
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private Graph graph; //the graph to be inspected
+    private int v;       //number of verticies in the graph
 
     /**
-     * Constructor for objects of class ConnectCheck
+     * Constructor for objects of class ConnectCheck.
+     * 
+     * @param graph The graph to be inspected.
      */
-    public ConnectCheck()
+    public ConnectCheck(Graph graph)
     {
-        // initialise instance variables
-        x = 0;
+        this.graph = graph;
+        v = graph.getNVerticies();
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Formats the vertecies of a connected component to fit
+     * the Project 7 requirements.
      * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
+     * @param component The connected verticies.
+     * @return Formatted String representation of component.
      */
-    public int sampleMethod(int y)
+    private String formatComponent(ArrayList<Integer> component)
     {
-        // put your code here
-        return x + y;
+        //empty case
+        if (component.isEmpty()) return "";
+        
+        String formatted = "{ ";
+        //insert vertex with space and comma as appropriate
+        
+        //append closing brace
+        formatted = formatted.concat("}");
+        return formatted;
     }
 }
