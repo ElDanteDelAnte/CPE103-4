@@ -8,7 +8,7 @@
 public class ConnectCheck
 {
     // instance variables - replace the example below with your own
-    private int x;
+    private Graph graph;
 
     /**
      * Constructor for objects of class ConnectCheck
