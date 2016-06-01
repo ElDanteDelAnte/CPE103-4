@@ -68,10 +68,14 @@ public class TopSorter
          */
         public void insert_edge(int x, int y)
         {
-            edges[x].add(new Integer(y));
-
-            if (!directed)
-                edges[y].add(new Integer(x));
+            Integer edge = new Integer(y);
+            if (!edges[x].contains(edge))
+            {
+                edges[x].add(edge);
+                
+                if (!directed)
+                    edges[y].add(new Integer(x));
+            }
         }
 
         /**
@@ -163,6 +167,9 @@ public class TopSorter
             if (indegs[i] == 0)
                 starters.add(new Integer(i));
         }
+        
+        //if not even partially sortable, return empty
+        //if (starters.isEmpty()) return order;
 
         /* Loop until no in-degree 0: */
         while (!starters.isEmpty())
