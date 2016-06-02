@@ -2,7 +2,7 @@
 /**
  * Checks whether a graph is Bipartite (BiColorable).
  * 
- * Project 7.
+ * Project 7: Bipartite Check Assignment
  * 
  * @author Sean Reddell
  * @version 5/31/16
@@ -37,18 +37,18 @@ public class BipartiteCheck
     {
         //colors are -1 and 1, 0 is unvisited
         //init to 0 by default
-        int[] colors = new boolean[v + 1];
-        
+        int[] colors = new int[v + 1];
+
         //tracks the order of verticies to visit (breadth-first search)
         Queue<Integer> searchOrder = new LinkedList<Integer>();
-        
+
         //0, 1, or 2 verticies implies bicolorable
         if (v < 3) return true;
-        
+
         //ready first vertex to search
         colors[1] = 1;
         searchOrder.add(new Integer(1));
-        
+
         //search all portions of the graph
         boolean traversing = true;
         while (traversing)
@@ -57,29 +57,28 @@ public class BipartiteCheck
             {
                 //get adjacent verticies
                 Integer vertex = searchOrder.remove();
-                ArrayList<Integer> adj = graph.adjList(vertex);
-                
+                LinkedList<Integer> adj = graph.adjList(vertex);
+
                 for (Integer u : adj)
                 {
                     //if color of adjacent vertex matches matches current color,
                     //graph is not bicolorable
                     if (colors[vertex] == colors[u]) return false;
-                    
+
                     if (colors[u] == 0)
                     {
                         //color unvisited verticies reverse of current color
                         colors[u] = 0 - colors[vertex];
-                        
+
                         //and ready them to be visited
                         searchOrder.add(new Integer(u));
                     }
-                    
+
                     //else, colors are already opposite, do nothing
-                
+
                 }
             }
-            
-            
+
             
             //find next disconnected portion of the graph
             int unv = 0;
@@ -88,16 +87,18 @@ public class BipartiteCheck
                 if (colors[i] == 0)
                     unv = i;
             }
-            
+
             //ready next remaining portion
             if (unv > 0) 
+            {    
                 searchOrder.add(new Integer(unv));
-            
+                colors[unv] = 1;
+            }
             //if no portion remains, we have traversed entire graph
             else
                 traversing = false;
         }
-        
+
         //once we have traversed entire graph without conflicting colors,
         //we have determined graph is bicolorable
         return true;
